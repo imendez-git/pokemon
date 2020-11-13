@@ -4,6 +4,7 @@ import Header from '../../components/header/header';
 import { connect } from 'react-redux';
 import { Select, Tag, Button, Modal as AntModal } from 'antd';
 import PokeModal from '../../components/modals/PokeModal';
+import Filter from '../../components/filter';
 import { getAll, getSpecificData } from '../../store/actions/PokemonsActions';
 
 const { Option } = Select;
@@ -91,30 +92,19 @@ export class Dashboard extends Component {
         return (
             <Wrapper>
                 <Header />
+                <div className="header">
+                    <h1>
+                        Find your favorite Pokemon here!
+                    </h1>
+                    <h2>What are you waiting? Click one and find out more info about the pokemon</h2>
+                </div>
                 <div className="filter">
-                    <Select
-                        style={{ width: '400px', paddingLeft: '30px', marginRight: '20px' }}
-                        showSearch
-                        defaultValue={null}
+                    <Filter
+                        data={pokemons}
                         placeholder="Find a pokemon"
-                        onChange={(value) => this.filter(value)}
-                        // onSearch={(value) => this.filter(value)}
-                        filterOption={(input, option) =>
-                            option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
-                        }
-                    >
-                        {pokemons && pokemons.map(item => {
-                            return (
-                                <Option key={item.id} value={item.id}>{item.name.toUpperCase()}</Option>
-                            )
-                        })}
-                    </Select>
-                    <Button
-                        className='button'
-                        onClick={() => this.setState({ onFilter: false })}
-                    >
-                        Limpiar
-                    </Button>
+                        onFilterChange={(value) => this.filter(value)}
+                        onClean={() => this.setState({ onFilter: false })}
+                    />
                 </div>
                 <div className="poke-container">
                     {
@@ -200,11 +190,11 @@ export class Dashboard extends Component {
                     onCancel={() => this.setState({ showModal: false })}
                     footer={null}
                     bodyStyle={{
-                      height: '100%',
-                      display: "flex",
-                      justifyContent: "center",
-                      alignItems: "center",
-                      flexDirection: "row"
+                        height: '100%',
+                        display: "flex",
+                        justifyContent: "center",
+                        alignItems: "center",
+                        flexDirection: "row"
                     }}
                     destroyOnClose={true}
                     width={600}
@@ -222,6 +212,14 @@ justify-content: center;
 flex-direction: column;
 flex-wrap: wrap;
 width: 100%;
+
+    .header{
+        margin: 30px;
+
+        h1{
+            color:
+        }
+    }
 
     .poke-container{
         margin-top: 30px;

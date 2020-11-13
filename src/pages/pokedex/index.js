@@ -204,7 +204,7 @@ class Pokedex extends Component {
                     destroyOnClose={true}
                     width={600}
                 >
-                    <PokeModal data={this.state.pokeActive} />
+                    <PokeModal data={this.state.pokeActive} removed={() => this.setState({ showModal: true })} />
                 </AntModal>
             </Wrapper>
         )

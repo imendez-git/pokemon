@@ -4,6 +4,7 @@ import Header from '../../components/header/header';
 import { connect } from 'react-redux';
 import { Select, Tag, Button, Modal as AntModal } from 'antd';
 import PokeModal from '../../components/modals/PokeModal';
+import Filter from '../../components/filter';
 import { getAll, getSpecificData } from '../../store/actions/PokemonsActions';
 
 const { Option } = Select;
@@ -99,30 +100,12 @@ class Favorites extends Component {
             <Wrapper>
                 <Header active='2' />
                 <div className="filter">
-                    <Select
-                        style={{ width: '400px', paddingLeft: '30px', marginRight: '20px' }}
-                        showSearch
-                        defaultValue={null}
+                    <Filter
+                        data={pokemons}
                         placeholder="Find a pokemon"
-                        onChange={(value) => this.filter(value)}
-                        // onSearch={(value) => this.filter(value)}
-                        filterOption={(input, option) =>
-                            option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
-                        }
-        
-                    >
-                        {pokemons && pokemons.map(item => {
-                            return (
-                                <Option key={item.id} value={item.id}>{item.name.toUpperCase()}</Option>
-                            )
-                        })}
-                    </Select>
-                    <Button
-                        className='button'
-                        onClick={() => this.setState({ onFilter: false })}
-                    >
-                        Limpiar
-                    </Button>
+                        onFilterChange={(value) => this.filter(value)}
+                        onClean={() => this.setState({ onFilter: false })}
+                    />
                 </div>
                 <div className="poke-container">
                     {
@@ -217,7 +200,7 @@ class Favorites extends Component {
                     destroyOnClose={true}
                     width={600}
                 >
-                    <PokeModal data={this.state.pokeActive} removed={() => this.setState({ refresh: true })} />
+                    <PokeModal data={this.state.pokeActive} removed={() => this.setState({ refresh: true, showModal: false })} />
                 </AntModal>
             </Wrapper>
         )
