@@ -263,7 +263,6 @@ width: 100%;
         }
     }
     .filter{
-        margin-top: 30px;
         width: 100%;
     }
     .button{
